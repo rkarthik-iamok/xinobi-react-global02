@@ -31,10 +31,26 @@ const Home = () => {
   }, [authState, oktaAuth]); // Update if authState changes
 
   const login = async () => {
-    await oktaAuth.signInWithRedirect({
-      acrValues: "urn:okta:loa:1fa:pwd",
-      scopes: ["openid", "email", "profile", "offline_access"],
-    });
+    // await oktaAuth.signInWithRedirect({
+    //   acrValues: "urn:okta:loa:1fa:pwd",
+    //   scopes: ["openid", "email", "profile", "offline_access"],
+    // });
+    await oktaAuth.signInWithRedirect();
+  };
+  const loginSpoke01 = async () => {
+    // await oktaAuth.signInWithRedirect({
+    //   acrValues: "urn:okta:loa:1fa:pwd",
+    //   scopes: ["openid", "email", "profile", "offline_access"],
+    // });
+    await oktaAuth.signInWithRedirect({ idp: "0oacgvobshxAUaYri697" });
+  };
+
+  const loginSpoke02 = async () => {
+    // await oktaAuth.signInWithRedirect({
+    //   acrValues: "urn:okta:loa:1fa:pwd",
+    //   scopes: ["openid", "email", "profile", "offline_access"],
+    // });
+    await oktaAuth.signInWithRedirect({ idp: "0oac29d3a5FoAcmnY697" });
   };
 
   const signup = async () => {
@@ -49,7 +65,7 @@ const Home = () => {
   return (
     <div>
       <div>
-        <Header as="h1">KarthikTC: Learn Okta for Identity Enthusiasts</Header>
+        <Header as="h1">Single Instance Global App 02</Header>
 
         {authState.isAuthenticated && !userInfo && (
           <div>Loading user information...</div>
@@ -79,19 +95,55 @@ const Home = () => {
         {!authState.isAuthenticated && (
           <div>
             <p>
-              <span>
-                This application is for Identity hobbyists. Click on Signup
-                button to create an Account.
-              </span>
+              <span>This is a single instance Global App on CIAM Hub.</span>
             </p>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Tenant</th>
+                  <th>URL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CIAM Hub</td>
+                  <td>
+                    <a href="https://ciam-hub.karthiktc.com">
+                      https://ciam-hub.karthiktc.com
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Spoke 01</td>
+                  <td>
+                    <a href="https://ciam-spoke01.karthiktc.com">
+                      https://ciam-spoke01.karthiktc.com
+                    </a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Spoke 02</td>
+                  <td>
+                    <a href="https://ciam-spoke02.karthiktc.com">
+                      https://ciam-spoke01.karthiktc.com
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
             <div className="signup-login">
               <Button id="login-button" primary onClick={login}>
                 Login
               </Button>
 
-              <Button id="login-button" primary onClick={signup}>
-                Signup
+              <Button id="login-button" primary onClick={loginSpoke01}>
+                Login Spoke01
+              </Button>
+
+              <Button id="login-button" primary onClick={loginSpoke02}>
+                Login Spoke02
               </Button>
             </div>
           </div>

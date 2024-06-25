@@ -14,7 +14,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #fddc5c;
+  background-color: #c6fcff;
 }
 
 .fed-login {
@@ -26,4 +26,19 @@ body {
   margin-top: 100px;
   display: flex;
   justify-content: space-evenly;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #f4f4f4;
 }
