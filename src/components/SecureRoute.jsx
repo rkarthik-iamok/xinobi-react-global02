@@ -66,7 +66,7 @@ export const StepupAuth = () => {
       // });
       oktaAuth.signInWithRedirect({
         acrValues: "urn:okta:loa:2fa:any",
-        scopes: ["openid", "email", "profile", "privileged"],
+        scopes: ["openid", "email", "profile"],
       });
     } else {
       console.log("Not Stepping up");
