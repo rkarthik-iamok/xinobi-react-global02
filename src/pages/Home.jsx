@@ -66,6 +66,44 @@ const Home = () => {
     <div>
       <div>
         <Header as="h1">Single Instance Global App 02</Header>
+        <p>
+          <span>This is a single instance Global App on CIAM Hub.</span>
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tenant</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>CIAM Hub</td>
+              <td>
+                <a href="https://ciam-hub.karthiktc.com">
+                  https://ciam-hub.karthiktc.com
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>Spoke 01</td>
+              <td>
+                <a href="https://ciam-spoke01.karthiktc.com">
+                  https://ciam-spoke01.karthiktc.com
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td>Spoke 02</td>
+              <td>
+                <a href="https://ciam-spoke02.karthiktc.com">
+                  https://ciam-spoke01.karthiktc.com
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         {authState.isAuthenticated && !userInfo && (
           <div>Loading user information...</div>
@@ -94,45 +132,6 @@ const Home = () => {
 
         {!authState.isAuthenticated && (
           <div>
-            <p>
-              <span>This is a single instance Global App on CIAM Hub.</span>
-            </p>
-
-            <table>
-              <thead>
-                <tr>
-                  <th>Tenant</th>
-                  <th>URL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>CIAM Hub</td>
-                  <td>
-                    <a href="https://ciam-hub.karthiktc.com">
-                      https://ciam-hub.karthiktc.com
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Spoke 01</td>
-                  <td>
-                    <a href="https://ciam-spoke01.karthiktc.com">
-                      https://ciam-spoke01.karthiktc.com
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Spoke 02</td>
-                  <td>
-                    <a href="https://ciam-spoke02.karthiktc.com">
-                      https://ciam-spoke01.karthiktc.com
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
             <div className="signup-login">
               <Button id="login-button" primary onClick={login}>
                 Login
