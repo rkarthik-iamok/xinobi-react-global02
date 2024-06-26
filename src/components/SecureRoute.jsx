@@ -17,7 +17,87 @@ import { Outlet } from "react-router-dom";
 import Loading from "./Loading";
 import config from "../config";
 
+const localeToRegion = {
+  "en-US": "US",
+  "en-UK": "EU",
+  "en-GB": "EU",
+  "fr-FR": "EU",
+  "es-ES": "EU",
+  "zh-CN": "AP",
+  "en-AU": "AP",
+  "en-NZ": "AP",
+  "pt-BR": "US",
+  "fr-CA": "US",
+};
+
+const regionToIdpId = {
+  US: null,
+  EU: "0oac29d3a5FoAcmnY697",
+  AP: "0oafx9jzzoa96ptfm697",
+};
+
+const regionalRedirectURL = {
+  US: null,
+  EU: "https://ciam-spoke02.karthiktc.com/app/okta_org2org/exkc28xmjiQhNIE8T697/sso/saml?RelayState",
+  AP: "https://ciam-spoke01.karthiktc.com/app/okta_org2org/exkcgsgxn3ZpTPsgJ697/sso/saml?RelayState",
+};
+
 export const RequiredAuth = () => {
+  useEffect(() => {
+    if (!authState) {
+      return;
+    }
+
+    if (!authState?.isAuthenticated) {
+      const originalUri = toRelativeUrl(
+        window.location.href,
+        window.location.origin
+      );
+      oktaAuth.setOriginalUri(originalUri);
+      oktaAuth.signInWithRedirect();
+    }
+  }, [oktaAuth, !!authState, authState?.isAuthenticated]);
+
+  if (!authState || !authState?.isAuthenticated) {
+    return <Loading />;
+  }
+
+  return <Outlet />;
+};
+
+export const RequiredAuthDR = () => {
+  const { oktaAuth, authState } = useOktaAuth();
+  const locale = navigator.language || navigator.userLanguage;
+  const region = localeToRegion[locale];
+  const idpId = regionToIdpId[region];
+
+  useEffect(() => {
+    if (!authState) {
+      return;
+    }
+
+    if (!authState?.isAuthenticated) {
+      const originalUri = toRelativeUrl(
+        window.location.href,
+        window.location.origin
+      );
+      oktaAuth.setOriginalUri(originalUri);
+      if (!idpId) {
+        oktaAuth.signInWithRedirect();
+      } else {
+        oktaAuth.signInWithRedirect({ idp: idpId });
+      }
+    }
+  }, [oktaAuth, !!authState, authState?.isAuthenticated]);
+
+  if (!authState || !authState?.isAuthenticated) {
+    return <Loading />;
+  }
+
+  return <Outlet />;
+};
+
+export const RequiredAuthWithSpoke02 = () => {
   const { oktaAuth, authState } = useOktaAuth();
 
   useEffect(() => {
@@ -31,7 +111,7 @@ export const RequiredAuth = () => {
         window.location.origin
       );
       oktaAuth.setOriginalUri(originalUri);
-      oktaAuth.signInWithRedirect();
+      oktaAuth.signInWithRedirect({ idp: "0oafvgi4gam6ItIuN697" });
     }
   }, [oktaAuth, !!authState, authState?.isAuthenticated]);
 
@@ -67,6 +147,9 @@ export const StepupAuth = () => {
       oktaAuth.signInWithRedirect({
         acrValues: "urn:okta:loa:2fa:any",
         scopes: ["openid", "email", "profile"],
+        extraParams: {
+          targetUri: originalUri,
+        },
       });
     } else {
       console.log("Not Stepping up");

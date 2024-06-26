@@ -12,12 +12,37 @@
 
 import { useOktaAuth } from "@okta/okta-react";
 import React, { useState, useEffect } from "react";
-
+import BrowserLocale from "../components/BrowserLocale";
 import { Button, Header } from "semantic-ui-react";
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
+
+  const localeToRegion = {
+    "en-US": "US",
+    "en-UK": "EU",
+    "en-GB": "EU",
+    "fr-FR": "EU",
+    "es-ES": "EU",
+    "zh-CN": "AP",
+    "en-AU": "AP",
+    "en-NZ": "AP",
+    "pt-BR": "US",
+    "fr-CA": "US",
+  };
+
+  const regionToIdpId = {
+    US: null,
+    EU: "0oac29d3a5FoAcmnY697",
+    AP: "0oafx9jzzoa96ptfm697",
+  };
+
+  const regionalRedirectURL = {
+    US: null,
+    EU: "https://ciam-spoke02.karthiktc.com/app/okta_org2org/exkc28xmjiQhNIE8T697/sso/saml?RelayState",
+    AP: "https://ciam-spoke01.karthiktc.com/app/okta_org2org/exkcgsgxn3ZpTPsgJ697/sso/saml?RelayState",
+  };
 
   useEffect(() => {
     if (!authState || !authState.isAuthenticated) {
@@ -29,6 +54,18 @@ const Home = () => {
       });
     }
   }, [authState, oktaAuth]); // Update if authState changes
+
+  const loginDR = async () => {
+    const locale = navigator.language || navigator.userLanguage;
+    const region = localeToRegion[locale];
+    const idpId = regionToIdpId[region];
+
+    if (!idpId) {
+      await oktaAuth.signInWithRedirect();
+    } else {
+      await oktaAuth.signInWithRedirect({ idp: idpId });
+    }
+  };
 
   const login = async () => {
     // await oktaAuth.signInWithRedirect({
@@ -51,6 +88,18 @@ const Home = () => {
     //   scopes: ["openid", "email", "profile", "offline_access"],
     // });
     await oktaAuth.signInWithRedirect({ idp: "0oac29d3a5FoAcmnY697" });
+  };
+
+  const loginSpoke02oidc = async () => {
+    // await oktaAuth.signInWithRedirect({
+    //   acrValues: "urn:okta:loa:1fa:pwd",
+    //   scopes: ["openid", "email", "profile", "offline_access"],
+    // });
+    await oktaAuth.signInWithRedirect({ idp: "0oafvgi4gam6ItIuN697" });
+  };
+
+  const customOption = async () => {
+    await oktaAuth.signInWithRedirect({ extraParams: { signup_page: true } });
   };
 
   const signup = async () => {
@@ -105,6 +154,11 @@ const Home = () => {
           </tbody>
         </table>
 
+        <div>
+          <h1>Browser Locale</h1>
+          <BrowserLocale />
+        </div>
+
         {authState.isAuthenticated && !userInfo && (
           <div>Loading user information...</div>
         )}
@@ -137,6 +191,10 @@ const Home = () => {
                 Login
               </Button>
 
+              <Button id="login-button" primary onClick={loginDR}>
+                Login DR (Browser Locale)
+              </Button>
+
               <Button id="login-button" primary onClick={loginSpoke01}>
                 Login Spoke01
               </Button>
@@ -144,6 +202,14 @@ const Home = () => {
               <Button id="login-button" primary onClick={loginSpoke02}>
                 Login Spoke02
               </Button>
+
+              {/* <Button id="login-button" primary onClick={loginSpoke02oidc}>
+                Login Spoke02 OIDC
+              </Button> */}
+
+              {/* <Button id="login-button" primary onClick={customOption}>
+                Custom Login
+              </Button> */}
             </div>
           </div>
         )}

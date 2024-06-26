@@ -10,11 +10,10 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React, { useEffect } from 'react';
-import { Header, Icon, Table } from 'semantic-ui-react';
+import React, { useEffect } from "react";
+import { Header, Icon, Table } from "semantic-ui-react";
 
 const Scenarios = () => {
-
   useEffect(() => {
     window.sessionStorage.setItem("noStepUp", "false");
   });
@@ -28,13 +27,17 @@ const Scenarios = () => {
           <Icon name="tasks" />
           Scenarios
         </Header>
-        <Header as="h3">
-            Continuous Authentication
-        </Header>
+        <Header as="h3">Continuous Authentication</Header>
         <ul>
-          <li><a href="/stepup">Step up session</a></li>
-          <li><a href="/stepupAlways">Step up session - every time</a></li>
-          <li><a href="/reauthenticate">Re-authenticate session</a></li>
+          <li>
+            <a href="/stepup">Step up session</a>
+          </li>
+          <li>
+            <a href="/stepupAlways">Step up session - every time</a>
+          </li>
+          <li>
+            <a href="/reauthenticate">Re-authenticate session</a>
+          </li>
         </ul>
       </div>
     </div>

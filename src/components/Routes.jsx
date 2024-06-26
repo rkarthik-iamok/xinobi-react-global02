@@ -18,6 +18,8 @@ import {
   StepupAuth,
   StepupAuthForce,
   StepupAuthAlways,
+  RequiredAuthWithSpoke02,
+  RequiredAuthDR,
 } from "./SecureRoute";
 import Home from "../pages/Home";
 import Loading from "./Loading";
@@ -27,6 +29,7 @@ import Scenarios from "../pages/Scenarios";
 import Stepup from "../pages/Stepup";
 import TermsOfUse from "../pages/TermsOfUse";
 import Signup from "../pages/Signup";
+import PersonaHome from "../pages/PersonaHome";
 
 const AppRoutes = () => {
   return (
@@ -39,10 +42,16 @@ const AppRoutes = () => {
       <Route path="/messages" element={<RequiredAuth />}>
         <Route path="" element={<Messages />} />
       </Route>
-      <Route path="/profile" element={<RequiredAuth />}>
+      <Route path="/profile" element={<RequiredAuthDR />}>
         <Route path="" element={<Profile />} />
       </Route>
-      <Route path="/scenarios" element={<RequiredAuth />}>
+      <Route path="/personahome" element={<RequiredAuthDR />}>
+        <Route path="" element={<PersonaHome />} />
+      </Route>
+      <Route path="/profile2" element={<RequiredAuthWithSpoke02 />}>
+        <Route path="" element={<Profile />} />
+      </Route>
+      <Route path="/scenarios" element={<RequiredAuthDR />}>
         <Route path="" element={<Scenarios />} />
       </Route>
       <Route path="/stepup" element={<StepupAuth />}>
@@ -51,6 +60,7 @@ const AppRoutes = () => {
       <Route path="/stepupAlways" element={<StepupAuthAlways />}>
         <Route path="" element={<Stepup />} />
       </Route>
+
       <Route path="/reauthenticate" element={<StepupAuthForce />}>
         <Route path="" element={<Profile />} />
       </Route>
