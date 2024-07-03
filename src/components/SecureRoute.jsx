@@ -10,37 +10,13 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useOktaAuth } from "@okta/okta-react";
 import { toRelativeUrl } from "@okta/okta-auth-js";
 import { Outlet } from "react-router-dom";
 import Loading from "./Loading";
 import config from "../config";
-
-const localeToRegion = {
-  "en-US": "US",
-  "en-UK": "EU",
-  "en-GB": "EU",
-  "fr-FR": "EU",
-  "es-ES": "EU",
-  "zh-CN": "AP",
-  "en-AU": "AP",
-  "en-NZ": "AP",
-  "pt-BR": "US",
-  "fr-CA": "US",
-};
-
-const regionToIdpId = {
-  US: null,
-  EU: "0oac29d3a5FoAcmnY697",
-  AP: "0oafx9jzzoa96ptfm697",
-};
-
-const regionalRedirectURL = {
-  US: null,
-  EU: "https://ciam-spoke02.karthiktc.com/app/okta_org2org/exkc28xmjiQhNIE8T697/sso/saml?RelayState",
-  AP: "https://ciam-spoke01.karthiktc.com/app/okta_org2org/exkcgsgxn3ZpTPsgJ697/sso/saml?RelayState",
-};
+import CountryContext from "../context/CountryContext";
 
 export const RequiredAuth = () => {
   useEffect(() => {
@@ -67,9 +43,9 @@ export const RequiredAuth = () => {
 
 export const RequiredAuthDR = () => {
   const { oktaAuth, authState } = useOktaAuth();
-  const locale = navigator.language || navigator.userLanguage;
-  const region = localeToRegion[locale];
-  const idpId = regionToIdpId[region];
+  const { idp } = useContext(CountryContext);
+
+  console.log(`IDP: ${idp}`);
 
   useEffect(() => {
     if (!authState) {
@@ -82,10 +58,10 @@ export const RequiredAuthDR = () => {
         window.location.origin
       );
       oktaAuth.setOriginalUri(originalUri);
-      if (!idpId) {
+      if (!idp) {
         oktaAuth.signInWithRedirect();
       } else {
-        oktaAuth.signInWithRedirect({ idp: idpId });
+        oktaAuth.signInWithRedirect({ idp });
       }
     }
   }, [oktaAuth, !!authState, authState?.isAuthenticated]);

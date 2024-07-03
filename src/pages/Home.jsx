@@ -11,44 +11,22 @@
  */
 
 import { useOktaAuth } from "@okta/okta-react";
-import React, { useState, useEffect } from "react";
-import BrowserLocale from "../components/BrowserLocale";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Header } from "semantic-ui-react";
+import CountryContext from "../context/CountryContext";
+import ChooseCountry from "../components/ChooseCountry";
+import BrowserLocale from "../components/BrowserLocale";
+import config from "../config";
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
 
-  const localeToRegion = {
-    "en-US": "US",
-    "en-UK": "EU",
-    "en-GB": "EU",
-    "fr-FR": "EU",
-    "es-ES": "EU",
-    "zh-CN": "AP",
-    "en-AU": "AP",
-    "en-NZ": "AP",
-    "pt-BR": "US",
-    "fr-CA": "US",
-  };
-
-  const regionToIdpId = {
-    US: null,
-    EU: "0oac29d3a5FoAcmnY697",
-    AP: "0oafx9jzzoa96ptfm697",
-  };
-
-  const regionalRedirectURL = {
-    US: null,
-    EU: "https://ciam-spoke02.karthiktc.com/app/okta_org2org/exkc28xmjiQhNIE8T697/sso/saml?RelayState",
-    AP: "https://ciam-spoke01.karthiktc.com/app/okta_org2org/exkcgsgxn3ZpTPsgJ697/sso/saml?RelayState",
-  };
-
-  const regionalSignupLinks = {
-    EU: "https://ciam-spoke02.karthiktc.com/app/bookmark/0oafxf26x71vfBnLb697/login?signup_page=true",
-    US: "https://ciam-hub.karthiktc.com/oauth2/default/v1/authorize?client_id=0oafuyhwb5JyOMrzt697&code_challenge=Z6zu-ZZWHMn0XoDOgMPTfqCZZ7RT161vEeQTj5JQkFI&code_challenge_method=S256&nonce=FgKN9IduBMELstBSwQfQ3HdiSQ4IBohRU3MuUKsbdjI8tVj3q8z2ZB7s5YSrp5WT&redirect_uri=https%3A%2F%2Fglobal-app02.karthiktc.com%2Flogin%2Fcallback&response_type=code&state=UeDaV3JbdX60xplCbPB3Z2IQIHhoOtf9PqzUJKSu8hZRKBTNTKhAaaKXZD0swRHT&scope=openid%20profile%20email&signup_page=true",
-    AP: "https://ciam-spoke01.karthiktc.com/app/bookmark/0oafxhvjafaxHfQre697/login?signup_page=true",
-  };
+  const { country, region, idp, signupLink } = useContext(CountryContext);
+  const dr = config.dr;
+  const hub = dr.hub;
+  const spoke01 = dr.spoke01;
+  const spoke02 = dr.spoke02;
 
   useEffect(() => {
     if (!authState || !authState.isAuthenticated) {
@@ -62,14 +40,10 @@ const Home = () => {
   }, [authState, oktaAuth]); // Update if authState changes
 
   const loginDR = async () => {
-    const locale = navigator.language || navigator.userLanguage;
-    const region = localeToRegion[locale];
-    const idpId = regionToIdpId[region];
-
-    if (!idpId) {
+    if (!idp) {
       await oktaAuth.signInWithRedirect();
     } else {
-      await oktaAuth.signInWithRedirect({ idp: idpId });
+      await oktaAuth.signInWithRedirect({ idp });
     }
   };
 
@@ -114,10 +88,7 @@ const Home = () => {
   };
 
   const signupDR = async () => {
-    const locale = navigator.language || navigator.userLanguage;
-    const region = localeToRegion[locale];
-
-    window.location.href = regionalSignupLinks[region];
+    window.location.href = signupLink;
     // window.location.href =
     //   "https://ciam-spoke02.karthiktc.com/oauth2/default/v1/authorize?client_id=0oac2qpybeHSxXr7T697&code_challenge=AptwK4s28Vrla9GDeSLhE9QEDT_p41ZihtfDKgeKU2A&code_challenge_method=S256&nonce=yuxWTTyxdoAd2RuPGxsPIkrevxnrYlhKjGq3Fdr34rgepSuCHRGiOhlPARa0H78K&redirect_uri=https%3A%2F%2Flocal-app-01.karthiktc.com%2Flogin%2Fcallback&response_type=code&state=qOvqq0XLGbIVpk1IZRoCkNC8JnxxBzzE02ZAd1FvnpkwGN5uQcWqYvUyL6UolXSK&acr_values=urn%3Aokta%3Aloa%3A1fa%3Apwd&scope=openid%20email%20profile%20offline_access&signup_page=true";
   };
@@ -145,33 +116,53 @@ const Home = () => {
             <tr>
               <td>CIAM Hub</td>
               <td>
-                <a href="https://ciam-hub.karthiktc.com">
-                  https://ciam-hub.karthiktc.com
-                </a>
+                <a href={hub}>{hub}</a>
               </td>
             </tr>
             <tr>
               <td>Spoke 01</td>
               <td>
-                <a href="https://ciam-spoke01.karthiktc.com">
-                  https://ciam-spoke01.karthiktc.com
-                </a>
+                <a href={spoke01}>{spoke01}</a>
               </td>
             </tr>
             <tr>
               <td>Spoke 02</td>
               <td>
-                <a href="https://ciam-spoke02.karthiktc.com">
-                  https://ciam-spoke01.karthiktc.com
-                </a>
+                <a href={spoke02}>{spoke02}</a>
               </td>
             </tr>
           </tbody>
         </table>
 
         <div>
-          <h1>Browser Locale</h1>
+          <h2>Browser Locale</h2>
           <BrowserLocale />
+          <h2>Country</h2>
+          <ChooseCountry />
+          {/* <p>
+            <strong>Country from Context API:</strong> {country}
+          </p> */}
+          <h2>Data Residency Info</h2>
+          <table>
+            <tbody>
+              <tr>
+                <th>Country</th>
+                <td>{country}</td>
+              </tr>
+              <tr>
+                <th>Region</th>
+                <td>{region}</td>
+              </tr>
+              <tr>
+                <th>IDP ID</th>
+                <td>{idp}</td>
+              </tr>
+              <tr>
+                <th>Signup Link</th>
+                <td>{signupLink}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         {authState.isAuthenticated && !userInfo && (

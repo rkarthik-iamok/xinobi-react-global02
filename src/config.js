@@ -5,6 +5,9 @@ const OKTA_TESTING_DISABLEHTTPSCHECK =
 const REDIRECT_URI = `${window.location.origin}/login/callback`;
 const STEPUP_LEVEL = process.env.STEPUP_LEVEL || "urn:okta:loa:1fa:any";
 const STEPUP_AGE = process.env.STEPUP_AGE || 30;
+const HUB = process.env.HUB;
+const SPOKE01 = process.env.SPOKE01;
+const SPOKE02 = process.env.SPOKE02;
 
 // eslint-disable-next-line
 export default {
@@ -23,5 +26,10 @@ export default {
   },
   resourceServer: {
     messagesUrl: "http://localhost:8000/api/messages",
+  },
+  dr: {
+    hub: HUB,
+    spoke01: SPOKE01,
+    spoke02: SPOKE02,
   },
 };
