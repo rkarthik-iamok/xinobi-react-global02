@@ -23,7 +23,8 @@ body {
 }
 
 .signup-login {
-  margin-top: 100px;
+  margin-top: 50px;
+  padding: 20px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -38,7 +39,33 @@ td {
   border: 1px solid #ccc;
   padding: 8px;
   text-align: center;
+  max-width: 550px;
 }
 th {
   background-color: #f4f4f4;
+}
+
+.table-cell {
+  word-wrap: break-word; /* or 'normal' to wrap only at spaces */
+}
+
+.div-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+}
+
+.left-div {
+  padding: 20px;
+  min-width: 550px;
+}
+
+.right-div {
+  padding: 20px;
+  width: 100%;
+}
+
+.custom-container {
+  margin-top: 7em !important;
+  max-width: 100% !important;
 }

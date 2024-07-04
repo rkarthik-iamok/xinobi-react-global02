@@ -99,70 +99,46 @@ const Home = () => {
 
   return (
     <div>
-      <div>
-        <Header as="h1">Single Instance Global App 02</Header>
-        <p>
-          <span>This is a single instance Global App on CIAM Hub.</span>
-        </p>
+      <div className="div-container">
+        <div className="left-div">
+          <Header as="h1">Single Instance Global App 02</Header>
+          <p>
+            <span>This is a single instance Global App on CIAM Hub.</span>
+          </p>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Tenant</th>
-              <th>URL</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>CIAM Hub</td>
-              <td>
-                <a href={hub}>{hub}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Spoke 01</td>
-              <td>
-                <a href={spoke01}>{spoke01}</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Spoke 02</td>
-              <td>
-                <a href={spoke02}>{spoke02}</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <div>
+            <h2>Browser Locale</h2>
+            <BrowserLocale />
 
-        <div>
-          <h2>Browser Locale</h2>
-          <BrowserLocale />
-          <h2>Country</h2>
-          <ChooseCountry />
-          {/* <p>
-            <strong>Country from Context API:</strong> {country}
-          </p> */}
-          <h2>Data Residency Info</h2>
-          <table>
-            <tbody>
-              <tr>
-                <th>Country</th>
-                <td>{country}</td>
-              </tr>
-              <tr>
-                <th>Region</th>
-                <td>{region}</td>
-              </tr>
-              <tr>
-                <th>IDP ID</th>
-                <td>{idp}</td>
-              </tr>
-              <tr>
-                <th>Signup Link</th>
-                <td>{signupLink}</td>
-              </tr>
-            </tbody>
-          </table>
+            <table>
+              <thead>
+                <tr>
+                  <th>Tenant</th>
+                  <th>URL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CIAM Hub</td>
+                  <td>
+                    <a href={hub}>{hub}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Spoke 01</td>
+                  <td>
+                    <a href={spoke01}>{spoke01}</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Spoke 02</td>
+                  <td>
+                    <a href={spoke02}>{spoke02}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {authState.isAuthenticated && !userInfo && (
@@ -191,7 +167,7 @@ const Home = () => {
         )}
 
         {!authState.isAuthenticated && (
-          <div>
+          <div className="right-div">
             <div className="signup-login">
               <Button id="login-button" primary onClick={login}>
                 Login
@@ -220,6 +196,34 @@ const Home = () => {
               {/* <Button id="login-button" primary onClick={customOption}>
                 Custom Login
               </Button> */}
+            </div>
+            <div>
+              <h2>Country</h2>
+              <ChooseCountry />
+              {/* <p>
+            <strong>Country from Context API:</strong> {country}
+          </p> */}
+              <h2>Data Residency Info</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Country</th>
+                    <td>{country}</td>
+                  </tr>
+                  <tr>
+                    <th>Region</th>
+                    <td>{region}</td>
+                  </tr>
+                  <tr>
+                    <th>IDP ID</th>
+                    <td>{idp}</td>
+                  </tr>
+                  <tr>
+                    <th>Signup Link</th>
+                    <td className="table-cell">{signupLink}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         )}

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-      <Container text style={{ marginTop: "7em" }} className="App">
+      <Container content className="App custom-container">
         <header className="App-header">
           <Navbar />
         </header>
