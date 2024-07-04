@@ -103,7 +103,9 @@ const Home = () => {
         <div className="left-div">
           <Header as="h1">Single Instance Global App 02</Header>
           <p>
-            <span>This is a single instance Global App on CIAM Hub.</span>
+            <span>
+              This is a single instance Shared Application on CIAM Hub.
+            </span>
           </p>
 
           <div>

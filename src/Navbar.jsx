@@ -31,7 +31,7 @@ const Navbar = () => {
         <Container>
           <Menu.Item header>
             <Link to="/">
-              <Image size="tiny" src="/karthiktc-logo.png" />
+              <Image size="tiny" src="/alcon-logo.png" />
             </Link>
             &nbsp;
           </Menu.Item>

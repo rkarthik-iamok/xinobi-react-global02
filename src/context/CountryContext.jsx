@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import config from "../config";
 
 const countryToRegion = {
   US: "US",
@@ -23,8 +24,8 @@ const localeToRegion = {
 
 const regionToIdpId = {
   US: null,
-  EU: "0oac29d3a5FoAcmnY697",
-  AP: "0oafx9jzzoa96ptfm697",
+  EU: config.dr.eu_idp,
+  AP: config.dr.ap_idp,
 };
 
 const regionalRedirectURL = {
@@ -34,9 +35,9 @@ const regionalRedirectURL = {
 };
 
 const regionalSignupLinks = {
-  EU: "https://ciam-spoke02.karthiktc.com/app/bookmark/0oafxf26x71vfBnLb697/login?signup_page=true",
-  US: "https://ciam-hub.karthiktc.com/oauth2/default/v1/authorize?client_id=0oafuyhwb5JyOMrzt697&code_challenge=Z6zu-ZZWHMn0XoDOgMPTfqCZZ7RT161vEeQTj5JQkFI&code_challenge_method=S256&nonce=FgKN9IduBMELstBSwQfQ3HdiSQ4IBohRU3MuUKsbdjI8tVj3q8z2ZB7s5YSrp5WT&redirect_uri=https%3A%2F%2Fglobal-app02.karthiktc.com%2Flogin%2Fcallback&response_type=code&state=UeDaV3JbdX60xplCbPB3Z2IQIHhoOtf9PqzUJKSu8hZRKBTNTKhAaaKXZD0swRHT&scope=openid%20profile%20email&signup_page=true",
-  AP: "https://ciam-spoke01.karthiktc.com/app/bookmark/0oafxhvjafaxHfQre697/login?signup_page=true",
+  EU: config.dr.eu_signup,
+  US: config.dr.us_signup,
+  AP: config.dr.ap_signup,
 };
 
 const getCountryFromLocale = (locale) => {

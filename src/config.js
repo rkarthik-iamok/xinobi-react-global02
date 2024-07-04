@@ -8,6 +8,11 @@ const STEPUP_AGE = process.env.STEPUP_AGE || 30;
 const HUB = process.env.HUB;
 const SPOKE01 = process.env.SPOKE01;
 const SPOKE02 = process.env.SPOKE02;
+const EU_IDP = process.env.EU_IDPID;
+const AP_IDP = process.env.AP_IDPID;
+const EU_SIGNUP = process.env.EU_SIGNUP;
+const AP_SIGNUP = process.env.AP_SIGNUP;
+const US_SIGNUP = process.env.US_SIGNUP;
 
 // eslint-disable-next-line
 export default {
@@ -31,5 +36,10 @@ export default {
     hub: HUB,
     spoke01: SPOKE01,
     spoke02: SPOKE02,
+    eu_idp: EU_IDP,
+    ap_idp: AP_IDP,
+    eu_signup: EU_SIGNUP,
+    ap_signup: AP_SIGNUP,
+    us_signup: US_SIGNUP,
   },
 };
