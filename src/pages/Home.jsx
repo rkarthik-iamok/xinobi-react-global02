@@ -37,6 +37,7 @@ const Home = () => {
       oktaAuth.getUser().then((info) => {
         setUserInfo(info);
       });
+      console.log(authState.idToken.claims.name);
       if (!authState.idToken.claims.name) {
         setName(authState.idToken.claims.name);
       }
