@@ -21,6 +21,7 @@ import config from "../config";
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
   const [userInfo, setUserInfo] = useState(null);
+  const [name, setName] = useState(null);
 
   const { country, region, idp, signupLink } = useContext(CountryContext);
   const dr = config.dr;
@@ -36,6 +37,9 @@ const Home = () => {
       oktaAuth.getUser().then((info) => {
         setUserInfo(info);
       });
+      if (!authState.idToken.claims.name) {
+        setName(authState.idToken.claims.name);
+      }
     }
   }, [authState, oktaAuth]); // Update if authState changes
 
@@ -151,7 +155,7 @@ const Home = () => {
           <div>
             <p>
               Welcome back,&nbsp;
-              {userInfo.name}!
+              <strong>{name}!</strong>
             </p>
             <p>
               <strong>Authentication Successful</strong> for user <br /> <br />
