@@ -65,6 +65,7 @@ th {
 .right-div {
   padding: 20px;
   width: 100%;
+  min-width: 700px;
 }
 
 .custom-container {

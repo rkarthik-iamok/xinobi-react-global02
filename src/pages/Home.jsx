@@ -172,15 +172,15 @@ const Home = () => {
           <div className="right-div">
             <div className="signup-login">
               <Button id="login-button" primary onClick={login}>
-                Login
+                Login - Regular
               </Button>
 
               <Button id="login-button" primary onClick={loginDR}>
-                Login DR (Browser Locale)
+                Login DR Aware - AXON JS
               </Button>
 
               <Button id="login-button" primary onClick={signupDR}>
-                Signup DR (Browser Locale)
+                Signup DR Aware - AXON JS
               </Button>
 
               {/* <Button id="login-button" primary onClick={loginSpoke01}>
