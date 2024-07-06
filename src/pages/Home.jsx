@@ -157,7 +157,7 @@ const Home = () => {
           <div>
             <p>
               Welcome back,&nbsp;
-              <strong>{authState.idToken.claims.name}!</strong>
+              {/* <strong>{authState.idToken.claims.name}!</strong> */}
             </p>
             <p>
               <strong>Authentication Successful</strong> for user <br /> <br />
