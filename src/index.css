@@ -29,6 +29,16 @@ body {
   justify-content: space-evenly;
 }
 
+.list-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.item-center {
+  position: relative;
+  top: 45px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;

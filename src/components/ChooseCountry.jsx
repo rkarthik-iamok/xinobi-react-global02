@@ -10,7 +10,7 @@ function ChooseCountry() {
   return (
     <div>
       <label htmlFor="country-select">
-        <strong>Select Country: </strong>
+        <strong>Select Country/ Market: </strong>
       </label>
       <select id="country-select" value={country} onChange={handleChange}>
         <option value="">--Please choose an option--</option>
