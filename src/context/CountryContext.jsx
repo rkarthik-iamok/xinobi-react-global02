@@ -41,6 +41,10 @@ const regionalSignupLinks = {
 };
 
 const getCountryFromLocale = (locale) => {
+  if (locale == "ja" || locale == "JA") {
+    return "JP";
+  }
+
   // Split the locale string by '-'
   const parts = locale.split("-");
 
